@@ -1,0 +1,8 @@
+.git
+.env
+.idea
+web/frontend/.env
+web/frontend/.nuxt
+web/frontend/node_modules
+web/backend/.env
+web/backend/tmp/*

@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:1.27
+    container_name: fg-nginx
+    ports:
+      - "8080:80"
+      - "8081:81"
+    volumes:
+      - ../web:/var/www
+      - ../nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - go
+      - node
+
+  go:
+    build:
+      context: ..
+      dockerfile: deploy/go/Dockerfile
+    container_name: fg-go
+    volumes:
+      - ../web/backend:/var/www/backend
+    working_dir: /var/www/backend
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: postgres_fg
+      DB_USERNAME: postgres
+      DB_PASSWORD: secret
+      REDIS_HOST: redis
+
+  node:
+    build:
+      context: ..
+      dockerfile: deploy/node/Dockerfile
+    container_name: fg-node
+    volumes:
+      - ../web/frontend:/var/www/frontend
+    working_dir: /var/www/frontend
+
+  postgres:
+    image: postgres:15
+    container_name: fg-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: postgres_fg
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: fg-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
