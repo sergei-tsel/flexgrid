@@ -4,7 +4,7 @@ import "flexgrid/internal/model"
 
 type UserRepoMock struct {
 	Users map[string]*model.User
-	count int
+	Count int
 }
 
 func (repo UserRepoMock) FindById(id int) (*model.User, error) {
@@ -26,9 +26,9 @@ func (repo UserRepoMock) FindByEmail(email string) (*model.User, error) {
 }
 
 func (repo UserRepoMock) Create(entity *model.User) error {
-	repo.count++
+	repo.Count++
 
-	entity.Id = repo.count
+	entity.Id = repo.Count
 
 	repo.Users[entity.Email] = entity
 

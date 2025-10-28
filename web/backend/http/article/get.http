@@ -1,4 +1,4 @@
-### Получение авторизованного пользователя
-GET http://localhost:8080/auth/me
+### Получение статьи
+GET http://localhost:8080/article/1
 Content-Type: application/json
 Cookie: fg_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.TNxs-v-4rE88DaH3VIVHifVpqHh8c1zqJW1Glxc3Ky0
