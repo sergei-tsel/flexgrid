@@ -1,5 +1,7 @@
 <template>
-  <NuxtPage></NuxtPage>
+  <NuxtLayout>
+    <NuxtPage></NuxtPage>
+  </NuxtLayout>
 </template>
 
 <style>
@@ -8,3 +10,6 @@
 @tailwind utilities;
 @tailwind forms;
 </style>
+
+<script setup lang="ts">
+</script>

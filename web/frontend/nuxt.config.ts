@@ -1,5 +1,6 @@
 import { config as loadEnv } from 'dotenv'
 import { resolve } from 'path'
+import tailwindcss from "@tailwindcss/vite";
 
 loadEnv({ path: resolve(__dirname, '.env') })
 
@@ -17,5 +18,13 @@ export default defineNuxtConfig({
         '@nuxt/image',
         '@nuxt/ui',
         '@nuxt/icon',
-    ]
+    ],
+
+    css: ['./app/assets/css/main.css'],
+
+    vite: {
+        plugins: [
+            tailwindcss()
+        ],
+    },
 })
