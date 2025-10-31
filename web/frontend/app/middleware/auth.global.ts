@@ -5,8 +5,7 @@ export default defineNuxtRouteMiddleware(
         to: RouteLocationNormalized,
         from: RouteLocationNormalized
     ) => {
-    const nuxtApp = useNuxtApp();
-    const cookie = useCookie('cookie_name', { maxAge: 60 * 60 * 24 });
+    const cookie = useCookie('fg_id');
 
     const isAuthenticated = Boolean(cookie.value);
 

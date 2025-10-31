@@ -1,17 +1,19 @@
 <template>
 <div class="flex flex-col">
-  <span class="flex-1 content-center">{{ me.data.email }}</span>
+  <span class="flex-1 content-center overflow-x-auto overflow-y-hidden">{{ me.data.email }}</span>
   <Digital
-      class="flex-2"
+      class="flex-1 md:p-12 max-md:p-2"
       @click="apiRequestLogout"
   >
     Выйти
   </Digital>
+  <div class="flex-1"></div>
 </div>
 </template>
 
 <script setup lang="ts">
 import Digital from "~/components/Digital.vue";
+import {reactive} from "vue";
 
 const me = reactive({
   data: {
@@ -19,7 +21,9 @@ const me = reactive({
   }
 })
 
-onMounted(apiRequestMe())
+onMounted(async () => {
+  await apiRequestMe()
+})
 
 /** --- Плейсхолдеры API --- */
 async function apiRequestMe() {
