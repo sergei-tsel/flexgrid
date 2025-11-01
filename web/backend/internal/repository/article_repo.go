@@ -52,6 +52,8 @@ func (repo *ArticleRepo) FindById(id int, userId int) (*model.Article, error) {
 		return nil, fmt.Errorf("failing to read data from database: %w", err)
 	}
 
+	setArticleCache(&article)
+
 	return &article, nil
 }
 
@@ -161,6 +163,8 @@ func (repo *ArticleRepo) UpdateIsPublic(entity *model.Article) error {
 		return fmt.Errorf("failed to update article.is_public: %w", err)
 	}
 
+	setArticleCache(entity)
+
 	return nil
 }
 
@@ -195,7 +199,7 @@ func setArticleCache(article *model.Article) {
 		context.Background(),
 		fmt.Sprintf("article:%d", article.Id),
 		jsonBytes,
-		3*time.Second,
+		3*time.Minute,
 	)
 }
 

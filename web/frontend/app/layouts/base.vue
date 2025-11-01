@@ -1,14 +1,12 @@
 <template>
   <div class="grid-container">
-    <Header class="grid-element-head"/>
+    <SiteHeader class="grid-element-h"/>
     <slot></slot>
-    <Footer class="grid-element-foot"/>
+    <SiteFooter class="grid-element-f"/>
   </div>
 </template>
 
 <script setup lang="ts">
-
-import Header from "~/components/Header.vue";
 </script>
 
 <style scoped>
@@ -23,17 +21,17 @@ import Header from "~/components/Header.vue";
 
         "I I I   I I I   I I I   I I I   I I I   I I I"
         "I I I   I I I   I I I   I I I   I I I   I I I"
-        "E E E   E E B   B B B   C C C   C D D   D D D"
+        "E E E   E E B   B B B   C C C   C C D   D D D"
 
-        "E E E   E E B   B B B   C C C   C D D   D D D"
-        "E E E   E E A   A A A   A A A   A D D   D D D"
-        "E E E   E E A   A A A   A A A   A D D   D D D"
+        "E E E   E E A   A A A   A A A   A A D   D D D"
+        "E E E   E E A   A A A   A A A   A A D   D D D"
+        "E E E   E E A   A A A   A A A   A A D   D D D"
 
-        "E E E   E E A   A A A   A A A   A D D   D D D"
-        "E E E   E E A   A A A   A A A   A D D   D D D"
-        "E E E   E E A   A A A   A A A   A D D   D D D"
+        "E E E   E E A   A A A   A A A   A A D   D D D"
+        "E E E   E E A   A A A   A A A   A A D   D D D"
+        "E E E   E E A   A A A   A A A   A A D   D D D"
 
-        "E E E   E E A   A A A   A A A   A D D   D D D"
+        "E E E   E E A   A A A   A A A   A A D   D D D"
         "G G G   G G G   G G G   G G G   G G G   G G G"
         "G G G   G G G   G G G   G G G   G G G   G G G"
 
@@ -44,39 +42,39 @@ import Header from "~/components/Header.vue";
   grid-template-columns: 2fr 0.25fr 0.75fr   1fr 0.5fr 1.5fr   0.75fr 1.25fr 1fr   1fr 1.25fr 0.75fr   1.5fr 0.5fr 1fr   0.75fr 0.25fr 2fr;
 }
 
-.grid-element-auth {
+.grid-element-a {
   grid-area: A;
 }
 
-.grid-element-button {
+.grid-element-b {
   grid-area: B;
 }
 
-.grid-element-control {
+.grid-element-c {
   grid-area: C;
 }
 
-.grid-element-daily {
+.grid-element-d {
   grid-area: D;
 }
 
-.grid-element-easy {
+.grid-element-e {
   grid-area: E;
 }
 
-.grid-element-foot {
+.grid-element-f {
   grid-area: F;
 }
 
-.grid-element-ground {
+.grid-element-g {
   grid-area: G;
 }
 
-.grid-element-head {
+.grid-element-h {
   grid-area: H;
 }
 
-.grid-element-intro {
+.grid-element-i {
   grid-area: I;
 }
 </style>

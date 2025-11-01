@@ -1,9 +1,15 @@
 package repository
 
 import (
+	"context"
+	"encoding/json"
+	"errors"
 	"flexgrid/internal/db"
 	"flexgrid/internal/model"
 	"fmt"
+	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 type UserRepository interface {
@@ -15,7 +21,13 @@ type UserRepository interface {
 type UserRepo struct{}
 
 func (repo *UserRepo) FindById(id int) (*model.User, error) {
-	err := createUserTable()
+	userCache, err := getUserCache(id)
+
+	if userCache != nil {
+		return userCache, nil
+	}
+
+	err = createUserTable()
 
 	query := `
 		SELECT *
@@ -37,6 +49,8 @@ func (repo *UserRepo) FindById(id int) (*model.User, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failing to read data from database: %w", err)
 	}
+
+	setUserCache(&user)
 
 	return &user, nil
 }
@@ -87,6 +101,8 @@ func (repo *UserRepo) Create(entity *model.User) error {
 		return fmt.Errorf("failed to insert user: %w", err)
 	}
 
+	setUserCache(entity)
+
 	return nil
 }
 
@@ -109,4 +125,36 @@ func createUserTable() error {
 	}
 
 	return nil
+}
+
+func setUserCache(user *model.User) {
+	jsonBytes, _ := json.Marshal(user)
+
+	db.Redis.Set(
+		context.Background(),
+		fmt.Sprintf("user:%d", user.Id),
+		jsonBytes,
+		3*time.Hour,
+	)
+}
+
+func getUserCache(userId int) (*model.User, error) {
+	result, err := db.Redis.Get(
+		context.Background(),
+		fmt.Sprintf("user:%d", userId),
+	).Result()
+
+	if errors.Is(err, redis.Nil) {
+		return nil, err
+	}
+
+	var user model.User
+
+	err = json.Unmarshal([]byte(result), &user)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }

@@ -9,10 +9,21 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 )
 
 func NewRouter() *chi.Mux {
 	r := chi.NewRouter()
+
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000", "http://flexgrid.com"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	})
+
+	r.Use(corsMiddleware.Handler)
 
 	r.Get("/ping", pong)
 
@@ -137,7 +148,9 @@ func me(w http.ResponseWriter, r *http.Request) {
 func createArticle(w http.ResponseWriter, r *http.Request) {
 	isAuth, err := service.CheckAuthentication(w, r)
 
-	if !isAuth {
+	authUserId, err := utils.GetAuthenticatedUserId(r)
+
+	if !isAuth || authUserId == nil {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
@@ -151,7 +164,7 @@ func createArticle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	article, err := service.CreateArticle(req, &repository.ArticleRepo{})
+	article, err := service.CreateArticle(req, &repository.ArticleRepo{}, *authUserId)
 
 	if err != nil {
 		http.Error(w, "Invalid request: "+err.Error(), http.StatusBadRequest)

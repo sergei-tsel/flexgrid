@@ -7,7 +7,6 @@ import (
 )
 
 type CreateArticleRequest struct {
-	UserId  int    `json:"user_id"`
 	Title   string `json:"title"`
 	Content string `json:"content"`
 }
@@ -45,9 +44,9 @@ func GetManyArticles(req GetManyArticlesRequest, articleRepo repository.ArticleR
 	return articles, nil
 }
 
-func CreateArticle(req CreateArticleRequest, repo repository.ArticleRepository) (*model.Article, error) {
+func CreateArticle(req CreateArticleRequest, repo repository.ArticleRepository, authUserId int) (*model.Article, error) {
 	article := &model.Article{}
-	article.UserId = req.UserId
+	article.UserId = authUserId
 	article.Title = req.Title
 	article.Content = req.Content
 	article.IsPublic = false

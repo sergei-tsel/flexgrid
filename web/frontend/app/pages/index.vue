@@ -1,50 +1,47 @@
 <template>
   <Digital
-      class="grid-element-button md:m-3 max-md:m-1"
-      :is-active="!newUser"
+      class="grid-element-b md:m-3 max-md:m-1"
+      :is-active="!isNewUser"
       @click="toggleForm(false)"
   >
     Войти
   </Digital>
   <Digital
-      class="grid-element-control md:m-3 max-md:m-1"
-      :is-active="newUser"
+      class="grid-element-c md:m-3 max-md:m-1"
+      :is-active="isNewUser"
       @click="toggleForm(true)"
   >
     Создать аккаунт
   </Digital>
-  <Auth v-if="showForm" :is-new-user="newUser" class="grid-element-auth"></Auth>
+  <Auth v-if="showForm" :is-new-user="isNewUser" class="grid-element-a"></Auth>
 </template>
 
 <script setup lang="ts">
-import Digital from "~/components/Digital.vue";
-
 definePageMeta({
   layout: 'base',
 })
 
-import Auth from "~/components/Auth.vue";
 import { ref } from "vue";
 
 const showForm = ref(false);
-const newUser = ref(false);
+const isNewUser = ref(false);
 
-const toggleForm = (isNewUser: boolean) => {
-  newUser.value = isNewUser;
+const toggleForm = (isRegistration: boolean) => {
+  isNewUser.value = isRegistration;
   showForm.value = true;
 };
 </script>
 
 <style scoped>
-.grid-element-auth {
+.grid-element-a {
   grid-area: A;
 }
 
-.grid-element-button {
+.grid-element-b {
   grid-area: B;
 }
 
-.grid-element-control {
+.grid-element-c {
   grid-area: C;
 }
 </style>

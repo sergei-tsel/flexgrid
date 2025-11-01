@@ -14,14 +14,16 @@ func TestGetOneArticle(t *testing.T) {
 	}
 
 	req := CreateArticleRequest{
-		UserId:  1,
 		Title:   "Тестовая статья",
 		Content: "Тестовый макет контента",
 	}
 
+	authUserId := 1
+
 	article, _ := CreateArticle(
 		req,
 		articleRepo,
+		authUserId,
 	)
 
 	type args struct {
@@ -39,7 +41,7 @@ func TestGetOneArticle(t *testing.T) {
 			name: "Получение статьи",
 			args: args{
 				articleId:  article.Id,
-				authUserId: req.UserId,
+				authUserId: authUserId,
 			},
 			want: &model.Article{
 				Title:   article.Title,
@@ -106,11 +108,11 @@ func TestGetManyArticles(t *testing.T) {
 
 		article, _ := CreateArticle(
 			CreateArticleRequest{
-				UserId:  user.Id,
 				Title:   "Тестовая статья",
 				Content: "Тестовый макет контента",
 			},
 			articleRepo,
+			user.Id,
 		)
 
 		articleRepo.Count++
@@ -214,9 +216,10 @@ func TestCreateArticle(t *testing.T) {
 		req CreateArticleRequest
 	}
 
+	authUserId := 1
+
 	testArgs := args{
 		req: CreateArticleRequest{
-			UserId:  1,
 			Title:   "Тестовая статья",
 			Content: "Тестовый макет контента",
 		},
@@ -241,7 +244,7 @@ func TestCreateArticle(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := CreateArticle(tt.args.req, articleRepo)
+			got, err := CreateArticle(tt.args.req, articleRepo, authUserId)
 
 			if (err != nil) != tt.wantErr {
 				t.Errorf("CreateArticle() error = %v, wantErr %v", err, tt.wantErr)
@@ -266,8 +269,9 @@ func TestUpdateArticle(t *testing.T) {
 		Articles: make(map[int]*model.Article),
 	}
 
+	authUserId := 1
+
 	req := CreateArticleRequest{
-		UserId:  1,
 		Title:   "Тестовая статья",
 		Content: "Тестовый макет контента",
 	}
@@ -275,6 +279,7 @@ func TestUpdateArticle(t *testing.T) {
 	article, _ := CreateArticle(
 		req,
 		articleRepo,
+		authUserId,
 	)
 
 	type args struct {
@@ -347,8 +352,9 @@ func TestPublishArticle(t *testing.T) {
 		Articles: make(map[int]*model.Article),
 	}
 
+	authUserId := 1
+
 	req := CreateArticleRequest{
-		UserId:  1,
 		Title:   "Тестовая статья",
 		Content: "Тестовый макет контента",
 	}
@@ -356,6 +362,7 @@ func TestPublishArticle(t *testing.T) {
 	article, _ := CreateArticle(
 		req,
 		articleRepo,
+		authUserId,
 	)
 
 	type args struct {

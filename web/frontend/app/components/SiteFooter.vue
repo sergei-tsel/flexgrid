@@ -3,7 +3,7 @@
     <div class="flex-1 content-center w-full">
     </div>
     <div class="flex-3 content-center w-full">
-      <span class="mb-4 py-4 px-1 bg-gray-900">Цель FLEXGRID</span>
+      <span class="mb-4 py-3 px-1 bg-gray-900">Цель FLEXGRID</span>
     </div>
     <div class="flex-1 content-center w-full">
     </div>

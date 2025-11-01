@@ -1,19 +1,26 @@
 import type { RouteLocationNormalized } from 'vue-router';
 
 export default defineNuxtRouteMiddleware(
-    (
+    async (
         to: RouteLocationNormalized,
         from: RouteLocationNormalized
     ) => {
-    const cookie = useCookie('fg_id');
+        const config = useRuntimeConfig();
+        const apiBaseUrl = config.public.apiBaseUrl;
 
-    const isAuthenticated = Boolean(cookie.value);
+        const res = await fetch(`${apiBaseUrl}/auth/me`, {
+            method: 'GET',
+            headers: {
+                cookie: useRequestEvent()?.req.headers.cookie || '',
+            },
+            credentials: 'include',
+        })
 
-    if (!isAuthenticated && to.path !== '/') {
-        return navigateTo('/');
-    }
+        if (!res.ok && to.path !== '/') {
+            return navigateTo('/');
+        }
 
-    if (isAuthenticated && to.path === '/') {
-        return navigateTo('/cabinet');
-    }
-});
+        if (res.ok && to.path === '/') {
+            return navigateTo('/cabinet');
+        }
+    });

@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import {useRuntimeConfig} from "#app";
 
 const loading = ref(false)
 
@@ -61,20 +62,27 @@ const isEmailValid = computed(() => {
 
 async function submit() {
   error.value = null
+
   if (!isEmailValid.value) {
     error.value = 'Проверьте корректность e-mail.'
     return
   }
+
   if (password.value.trim().length < 6) {
     error.value = 'Пароль должен состоять хотя бы из шести символов.'
     return
   }
 
   loading.value = true
+
   try {
-    props.isNewUser
+    const res = props.isNewUser
         ? await apiRequestRegisterByEmail(email.value.trim(), password.value.trim())
         : await apiRequestLoginByEmail(email.value.trim(), password.value.trim());
+
+    if (res?.ok) {
+      navigateTo('/cabinet')
+    }
   } finally {
     loading.value = false
   }
@@ -82,18 +90,26 @@ async function submit() {
 
 /** --- Плейсхолдеры API --- */
 async function apiRequestRegisterByEmail(email: string, password: string) {
-  return fetch('/api/auth/register', {
+  const config = useRuntimeConfig();
+  const apiBaseUrl = config.public.apiBaseUrl;
+
+  return await fetch(`${apiBaseUrl}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password }),
+    credentials: 'include'
   })
 }
 
 async function apiRequestLoginByEmail(email: string, password: string) {
-  return fetch('/api/auth/login', {
+  const config = useRuntimeConfig();
+  const apiBaseUrl = config.public.apiBaseUrl;
+
+  return await fetch(`${apiBaseUrl}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password }),
+    credentials: 'include'
   })
 }
 </script>

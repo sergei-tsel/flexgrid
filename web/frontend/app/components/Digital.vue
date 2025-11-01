@@ -2,7 +2,7 @@
   <section class="md:m-3">
     <button
       :class="[
-        'transition-all duration-300 ease-in-out w-full h-full max-md:text-sm overflow-clip',
+        'transition-all duration-300 ease-in-out w-full h-full rounded-md max-md:text-sm cursor-pointer overflow-clip',
         props.isActive ? 'bg-yellow-300 text-black' : 'bg-black text-yellow-300'
       ]">
       <slot></slot>

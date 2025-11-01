@@ -1,48 +1,77 @@
 <template>
 <div class="flex flex-col">
-  <span class="flex-1 content-center overflow-x-auto overflow-y-hidden">{{ me.data.email }}</span>
+  <h2 class="flex-1 md:text-2xl max-md:text-shadow-md   content-center text-center overflow-x-auto overflow-y-hidden">
+    Профиль
+  </h2>
+  <span class="flex-2 content-center text-center overflow-x-auto overflow-y-hidden">{{ me?.Email }}</span>
   <Digital
-      class="flex-1 md:p-12 max-md:p-2"
-      @click="apiRequestLogout"
+      class="flex-1 md:m-16 max-md:m-2"
+      :is-active="logoutButtonActive"
+      @click="logout"
   >
     Выйти
   </Digital>
-  <div class="flex-1"></div>
 </div>
 </template>
 
 <script setup lang="ts">
-import Digital from "~/components/Digital.vue";
-import {reactive} from "vue";
+import {ref} from "vue";
+import {useRuntimeConfig} from "#app";
 
-const me = reactive({
-  data: {
-    email: "",
-  }
-})
+const logoutButtonActive = ref(false);
+
+interface User {
+  Email: string;
+}
+
+const me = ref<User | null>(null);
 
 onMounted(async () => {
   await apiRequestMe()
 })
 
+async function logout() {
+  logoutButtonActive.value = true;
+
+  const res = await apiRequestLogout()
+
+  if (res.ok) {
+    navigateTo('/')
+  }
+}
+
 /** --- Плейсхолдеры API --- */
 async function apiRequestMe() {
-  const res = fetch('/api/auth/me', {
+  const config = useRuntimeConfig();
+  const apiBaseUrl = config.public.apiBaseUrl;
+
+  const res = await fetch(`${apiBaseUrl}/auth/me`, {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      cookie: useRequestEvent()?.req.headers.cookie || '',
+    },
+    credentials: "include",
   })
 
-  let body
-  try { body = await (await res).json() } catch { body = {} }
-  me.data = body.data
+  if (res.ok) {
+    me.value = await res.json()
+  } else {
+    me.value = null
+  }
 
   return res
 }
 
 async function apiRequestLogout() {
-  return fetch('/api/auth/logout', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+  const config = useRuntimeConfig();
+  const apiBaseUrl = config.public.apiBaseUrl;
+
+  return await fetch(`${apiBaseUrl}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      cookie: useRequestEvent()?.req.headers.cookie || '',
+    },
+    credentials: 'include'
   })
 }
 </script>
