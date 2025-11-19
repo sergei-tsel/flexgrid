@@ -28,6 +28,12 @@ export default defineNuxtConfig({
         ],
     },
 
+    fonts: {
+        providers: {
+            fontshare: false
+        }
+    },
+
     runtimeConfig: {
         public: {
             apiBaseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'http://flexgrid.com/api',
