@@ -1,6 +1,6 @@
 <template>
   <aside class="overflow-x-hidden overflow-y-auto">
-    <h1 class="text-center md:text-2xl">
+    <h1 class="text-center md:text-2xl max-md:text-shadow-md">
       Поиск
     </h1>
     <div class="mx-auto max-w-sm max-h-sm">

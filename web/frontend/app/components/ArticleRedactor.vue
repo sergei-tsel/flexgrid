@@ -1,9 +1,9 @@
 <template>
   <section class="mx-auto max-w-sm max-h-sm overflow-x-hidden overflow-y-auto">
-    <h1 class="text-center md:text-2xl" v-if="action === 'create'">
+    <h1 class="text-center md:text-2xl max-md:text-shadow-md" v-if="action === 'create'">
       Создать статью
     </h1>
-    <h1 class="text-center md:text-2xl" v-else-if="action === 'edit'">
+    <h1 class="text-center md:text-2xl max-md:text-shadow-md" v-else-if="action === 'edit'">
       Редактировать статью
     </h1>
     <div class="flex flex-col gap-4">
