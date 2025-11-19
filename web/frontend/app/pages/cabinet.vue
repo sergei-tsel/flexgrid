@@ -31,7 +31,7 @@ import {ref} from "vue";
 import {useRuntimeConfig} from "#app";
 
 definePageMeta({
-  layout: 'start',
+  layout: 'page',
 })
 
 const modalWindowVisible = ref(false);

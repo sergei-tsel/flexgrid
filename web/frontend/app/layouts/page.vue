@@ -21,18 +21,18 @@
 
         "I I I   I I I   I I I   I I I   I I I   I I I"
         ". . .   C C C   C C C   C C C   C C C   . . ."
-        ". . .   . . E   E E .   . D D   D . .   . . ."
+        ". . .   E E E   E . .   . . D   D D D   . . ."
 
-        ". . .   . A A   A A A   A A A   A A .   . . ."
-        ". . .   . A A   A A A   A A A   A A .   . . ."
-        ". . .   . A A   A A A   A A A   A A .   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
 
-        ". . .   . A A   A A A   A A A   A A .   . . ."
-        ". . .   . A A   A A A   A A A   A A .   . . ."
-        ". . .   . A A   A A A   A A A   A A .   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
 
-        ". . .   . A A   A A A   A A A   A A .   . . ."
-        ". . .   . A A   A A A   A A A   A A .   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
+        ". . .   A A A   A A A   A A A   A A A   . . ."
         "G G G   G G G   G G G   G G G   G G G   G G G"
 
         "G G G   G G G   G G G   G G G   G G G   G G G"

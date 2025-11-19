@@ -1,22 +1,20 @@
 <template>
-  <div v-if="isMy" class="flex flex-col justify-between">
+  <div v-if="isMy" class="flex flex-col justify-between gap-1">
     <Digital
-        class="flex-1 md:m-6"
         v-if="!articleEntity?.IsPublic"
+        class="flex-1"
         :is-active="publishButtonActive"
         @click="publishArticle()"
     >
       Открыть статью публике
     </Digital>
-    <div class="flex-1"></div>
     <Digital
-        class="flex-1 md:m-6"
+        class="flex-1"
         :is-active="editButtonActive"
         @click="toggleModelWindow(true)"
     >
       Открыть редактор
     </Digital>
-    <div class="flex-6"></div>
     <ModalWindow
         class="overflow-x-hidden overflow-y-auto"
         v-if="modalWindowVisible"
